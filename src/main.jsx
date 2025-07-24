@@ -1,35 +1,36 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import MainLayout from "./MainLayout/Mainlayout";
 import Home from "./Pages/Home";
 import Checkout from "./Pages/Checkout";
 import Cart from "./Pages/Cart";
+import "./Api.js";
+import ProductsSection from "./Components/Products.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <MainLayout />
-    ),
+    element: <MainLayout />,
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <ProductsSection />,
       },
       {
         path: "/",
-        element: <Checkout />
+        element: <Home />,
       },
       {
         path: "/",
-        element: <Cart />
+        element: <Checkout />,
       },
-    ]
+      {
+        path: "/",
+        element: <Cart />,
+      },
+    ],
   },
 ]);
 
