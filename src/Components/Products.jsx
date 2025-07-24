@@ -41,7 +41,7 @@ const ProductsSection = () => {
 
             {/* Product Image */}
             <img
-              src={product.images}
+              src={product.images[0].src}
               alt={product.name}
               className="w-full h-[300px] object-cover rounded-md"
             />
