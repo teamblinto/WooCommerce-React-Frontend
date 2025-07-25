@@ -55,3 +55,19 @@ api.get("/products")
 
     }
 }
+
+// Read Single Products Data by ID
+export const getSingleProductData = async(productID)=>{
+  try{
+      const url = `${API_URL}/products/${productID}`
+      const oauthParams = generateOAuthSignature(url)
+      const response = await api.get(`/products/${productID}`,{
+        params: oauthParams
+      })
+      return response.data
+
+  }catch(error){
+    console.log(error)
+
+  }
+}
