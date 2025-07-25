@@ -19,9 +19,12 @@ export default function CartCard() {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
-              Update
-            </button>
+            <input
+              type="number"
+              className="text-black p-2 rounded-md border border-black w-16"
+              placeholder="0"
+            />
+
             <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
               Remove
             </button>
