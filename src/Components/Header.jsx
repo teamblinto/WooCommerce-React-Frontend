@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../assets/img/Infinity-social-Logo.webp";
 
 function Header() {
   return (
@@ -6,7 +7,7 @@ function Header() {
       <div className="container mx-auto flex justify-between items-center">
         <div className="w-24 sm:w-32  bg-teal-200">
           <img
-            src="src/assets/img/Infinity-social-Logo.webp"
+            src={logo}
             alt="Infinity Social Logo"
             className="w-full h-auto object-contain"
           />
@@ -29,8 +30,12 @@ function Header() {
                 />
               </form>
             </li>
-            <li>Home</li>
-            <li>Chart</li>
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/cart">Cart</a>
+            </li>
           </ul>
           <button className="lg:hidden p-2 border border-transparent hover:border hover:border-black rounded-md cursor-pointer">
             <i className="fas fa-bars text-black"></i>
