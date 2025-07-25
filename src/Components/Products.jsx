@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAllProducts } from "../Api";
+import { Link } from "react-router-dom";
 
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +9,7 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       const data = await getAllProducts();
       setProducts(data);
-      console.log("data", data);
+      console.log(data);
     };
     fetchProducts();
   }, []);
@@ -23,50 +24,49 @@ const ProductsSection = () => {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-        {products?.map((product) => (
-          <div
-            key={product?.id}
-            className="bg-white rounded-xl group relative hover:shadow-md cursor-pointer"
-          >
-            {/* SALE Badge */}
-            {product?.on_sale && (
-              <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
-                SALE
-              </span>
-            )}
+        {products.map((product) => (
+          <Link to={`/product/${product.id}`} key={product.id}>
+            <div className="bg-white rounded-xl group relative cursor-pointer hover:shadow-lg transition">
+              {/* SALE Badge */}
+              {product.on_sale && (
+                <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
+                  SALE
+                </span>
+              )}
 
-            {/* Product Image */}
-            <img
-              src={product?.images[0].src}
-              alt={product?.name}
-              className="w-full h-[300px] object-cover rounded-md"
-            />
+              {/* Product Image */}
+              <img
+                src={product.images[0].src}
+                alt={product.name}
+                className="w-full h-[300px] object-cover rounded-md"
+              />
 
-            {/* Product Details */}
-            <div className="mt-4 px-2">
-              <p className="text-sm text-gray-400">Ethnic Wear</p>
-              <h3 className="text-md font-semibold text-gray-800 line-clamp-2">
-                {product?.name}
-              </h3>
+              {/* Product Details */}
+              <div className="mt-4 px-2">
+                <p className="text-sm text-gray-400">Ethnic Wear</p>
+                <h3 className="text-md font-semibold text-gray-800 line-clamp-2">
+                  {product.name}
+                </h3>
 
-              <div className="mt-1">
-                {product.on_sale ? (
-                  <div className="flex gap-2 items-center">
-                    <span className="text-sm text-gray-400 line-through">
-                      ৳ {product?.regular_price}
+                <div className="mt-1">
+                  {product.on_sale ? (
+                    <div className="flex gap-2 items-center">
+                      <span className="text-sm text-gray-400 line-through">
+                        ৳ {product.regular_price}
+                      </span>
+                      <span className="text-red-500 font-semibold">
+                        ৳ {product.sale_price}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-gray-800 font-semibold">
+                      ৳ {product.regular_price}
                     </span>
-                    <span className="text-red-500 font-semibold">
-                      ৳ {product?.sale_price}
-                    </span>
-                  </div>
-                ) : (
-                  <span className="text-gray-800 font-semibold">
-                    ৳ {product?.regular_price}
-                  </span>
-                )}
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
