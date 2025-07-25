@@ -29,8 +29,12 @@ function Header() {
                 />
               </form>
             </li>
-            <li>Home</li>
-            <li>Chart</li>
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/cart">Cart</a>
+            </li>
           </ul>
           <button className="lg:hidden p-2 border border-transparent hover:border hover:border-black rounded-md cursor-pointer">
             <i className="fas fa-bars text-black"></i>

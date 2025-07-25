@@ -24,7 +24,10 @@ const ProductsSection = () => {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
         {products?.map((product) => (
-          <div key={product?.id} className="bg-white rounded-xl group relative">
+          <div
+            key={product?.id}
+            className="bg-white rounded-xl group relative hover:shadow-md cursor-pointer"
+          >
             {/* SALE Badge */}
             {product?.on_sale && (
               <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
