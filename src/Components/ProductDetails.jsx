@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSingleProductData } from "../Api"; // You need to create this API function
 
-const ProductDetails = () => {
+const ProductDetails = ({onAddToCart}) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   console.log("this is id ",id)
@@ -18,7 +18,7 @@ const ProductDetails = () => {
   if (!product) return <div className="text-center mt-10">Loading...</div>;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10 grid lg:grid-cols-2 gap-10">
+    <div className="max-w-4xl pt-30 mx-auto px-4 py-10 grid lg:grid-cols-2 gap-10">
       {/* Product Image */}
       <div className="bg-white border rounded-lg p-4">
         <img
@@ -30,7 +30,7 @@ const ProductDetails = () => {
 
       {/* Product Info */}
       <div>
-        <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
+        <h1 className="text-2xl font-bold mb-2">{product?.name}</h1>
         <p className="text-sm text-gray-500 mb-4">Code: {product.sku}</p>
 
         {/* Price */}
@@ -60,7 +60,7 @@ const ProductDetails = () => {
             defaultValue="1"
             className="border border-gray-300 px-4 py-2 w-20 rounded"
           />
-          <button className="bg-black text-white px-6 py-2 rounded">Add to Cart</button>
+          <button onClick={()=>{onAddToCart(console.log(product))}} className="bg-black text-white px-6 py-2 rounded">Add to Cart</button>
         </div>
       </div>
     </div>

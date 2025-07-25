@@ -10,6 +10,16 @@ import "./Api.js";
 import ProductsSection from "./Components/Products.jsx";
 import ProductDetails from "./Components/ProductDetails.jsx";
 
+// cosnt [cart, setCart] = useState([])
+
+const addProductsToCart =(product)=>{
+  product.quantity = 1
+  console.log(product)
+
+}
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,11 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-products",
-        element: <ProductsSection />,
+        element: <ProductsSection/>,
       },
       {
         path: "/product/:id",
-        element: <ProductDetails />,
+        element: <ProductDetails  onAddToCart={addProductsToCart}  />,
       },
       {
         path: "/",

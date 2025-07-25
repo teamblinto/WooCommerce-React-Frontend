@@ -2,7 +2,7 @@ import React from "react";
 
 function Header() {
   return (
-    <nav className="left-0 right-0 px-5 py-4 shadow-md z-10 fixed bg-white">
+    <nav className="left-0 right-0 px-5 py-4 shadow-md z-99 fixed bg-white">
       <div className="container mx-auto flex justify-between items-center">
         <div className="w-24 sm:w-32  bg-teal-200">
           <img
