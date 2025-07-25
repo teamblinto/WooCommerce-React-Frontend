@@ -8,8 +8,7 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       const data = await getAllProducts();
       setProducts(data);
-      console.log(data)
-    
+      console.log("data", data);
     };
     fetchProducts();
   }, []);
@@ -24,16 +23,10 @@ const ProductsSection = () => {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-        {
-        products.map((product) => (
-            
-           
-          <div
-            key={product.id}
-            className="bg-white rounded-xl group relative"
-          >
+        {products?.map((product) => (
+          <div key={product?.id} className="bg-white rounded-xl group relative">
             {/* SALE Badge */}
-            {product.on_sale && (
+            {product?.on_sale && (
               <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
                 SALE
               </span>
@@ -41,8 +34,8 @@ const ProductsSection = () => {
 
             {/* Product Image */}
             <img
-              src={product.images[0].src}
-              alt={product.name}
+              src={product?.images[0].src}
+              alt={product?.name}
               className="w-full h-[300px] object-cover rounded-md"
             />
 
@@ -50,22 +43,22 @@ const ProductsSection = () => {
             <div className="mt-4 px-2">
               <p className="text-sm text-gray-400">Ethnic Wear</p>
               <h3 className="text-md font-semibold text-gray-800 line-clamp-2">
-                {product.name}
+                {product?.name}
               </h3>
 
               <div className="mt-1">
                 {product.on_sale ? (
                   <div className="flex gap-2 items-center">
                     <span className="text-sm text-gray-400 line-through">
-                      ৳ {product.regular_price}
+                      ৳ {product?.regular_price}
                     </span>
                     <span className="text-red-500 font-semibold">
-                      ৳ {product.sale_price}
+                      ৳ {product?.sale_price}
                     </span>
                   </div>
                 ) : (
                   <span className="text-gray-800 font-semibold">
-                    ৳ {product.regular_price}
+                    ৳ {product?.regular_price}
                   </span>
                 )}
               </div>
