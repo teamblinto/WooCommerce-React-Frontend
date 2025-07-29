@@ -164,3 +164,21 @@ export const createOrder = async (userInfo) => {
     throw error;
   }
 };
+
+
+//coupons // get all coupons from WooCommerce store
+export const getAllCoupons = async () => {
+  try {
+    const url = `${API_URL}/coupons`; // endpoint to fetch coupons
+    const oauthParams = generateOAuthSignature(url); // use your existing signature generator
+    console.log(oauthParams);
+
+    const response = await api.get("/coupons", {
+      params: oauthParams,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching coupons:", error);
+  }
+};

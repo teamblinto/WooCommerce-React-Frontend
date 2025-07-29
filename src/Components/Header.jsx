@@ -4,6 +4,8 @@ import Cart from "../Pages/Cart";
 import { href, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { FaCartShopping } from "react-icons/fa6";
+import CouponList from "./CouponList";
 
 function Header() {
   const [cartPopUp, setCartPopUp] = useState(false);
@@ -25,8 +27,12 @@ function Header() {
     };
 
     return (
+  
       <nav className="left-0 right-0 px-10 py-2 shadow-md z-99 fixed bg-white">
+        
+        
         <div className="container mx-auto flex justify-between items-center">
+          
           <div className="w-24 sm:w-32  bg-teal-200">
             <a href="/">
               <img
@@ -40,7 +46,7 @@ function Header() {
           <div>
             <ul className="hidden lg:flex justify-end items-center gap-6">
               <li>
-                <form action="submit" className="flex items-center space-x-2">
+                {/* <form action="submit" className="flex items-center space-x-2">
                   <input
                     type="text"
                     name="search"
@@ -52,7 +58,7 @@ function Header() {
                     value="Search"
                     className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 cursor-pointer"
                   />
-                </form>
+                </form> */}
               </li>
               <li>
                 <a href="/">Home</a>
@@ -67,7 +73,7 @@ function Header() {
                 onClick={() => setCartPopUp(!cartPopUp)}
                 className="cursor-pointer"
               >
-                <img className="w-6" src="./src/assets/img/shop.png" alt="" />
+                <FaCartShopping />
               </li>
               {/* <li className="cursor-pointer">
               <Link to="/login">Signup</Link>

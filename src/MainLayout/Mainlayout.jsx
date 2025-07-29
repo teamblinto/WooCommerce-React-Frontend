@@ -11,6 +11,9 @@ const MainLayout = () => {
       {/* <div className="h-[calc(100vh-300px)]"> */}
       <Outlet />
       {/* </div> */}
+      <div className="px-30 my-10" >
+          
+      </div>
 
       <Footer />
     </div>

@@ -1,5 +1,3 @@
-
-
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -41,8 +39,6 @@ function App() {
     });
   };
 
-
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -56,8 +52,8 @@ function App() {
         },
         { path: "/checkout", element: <Checkout /> },
         { path: "/viewcart", element: <CartPage /> },
-        { path: "/login", element: <Auth /> }, 
-         { path: "/orders", element: <MyOrders /> },
+        { path: "/login", element: <Auth /> },
+        { path: "/orders", element: <MyOrders /> },
       ],
     },
   ]);
