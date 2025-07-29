@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import CouponList from "./CouponList";
+import { FaCaretSquareRight } from "react-icons/fa";
+import { CiUser } from "react-icons/ci";
 
 function Header() {
   const [cartPopUp, setCartPopUp] = useState(false);
@@ -88,11 +90,13 @@ function Header() {
                   </button>
                 ) : (
                   <Link to="/login">
-                    <img
+                    {/* <img
                       className="w-7"
                       src="./src/assets/img/user.png"
                       alt=""
-                    />
+                    /> */}
+                         <CiUser size={20} />
+
                   </Link>
                 )}
               </li>
