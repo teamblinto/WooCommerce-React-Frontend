@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -125,7 +126,10 @@ const CartPage = () => {
             const token = localStorage.getItem("token");
 
             if (!token) {
-              alert("Please Sign-Up to proceed to checkout.");
+              toast.warn("Please Sign-Up to proceed to checkout", {
+  position: "top-left",
+});
+              
               navigate("/login");
               return;
             }
@@ -133,7 +137,7 @@ const CartPage = () => {
             if (cartItems.length > 0) {
               navigate("/checkout");
             } else {
-              alert("Your cart is empty! Please add items to proceed.");
+              toast.warn("Your cart is empty! Please add items to proceed.");
             }
           }}
         >

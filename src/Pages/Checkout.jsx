@@ -87,7 +87,7 @@ function Checkout() {
 
     } catch (error) {
       console.error("Order failed:", error);
-      alert("Failed to place order. Please try again.");
+      toast.error("Failed to place order. Please try again.");
     }
   };
 
