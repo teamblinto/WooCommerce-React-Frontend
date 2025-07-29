@@ -73,26 +73,6 @@ export const getSingleProductData = async (productID) => {
   }
 }
 
-//Register user api
-// export const registerStoreUser = async (userInfo) => {
-//   try{
-
-//     const response = await api.post(WP_USER_API_URL, userInfo, {
-//       headers:
-//      {
-//        "Authorization": "Basic " + btoa("admin:admin")
-//      }
-//     })
-
-// return response.data
-//      }
-
-//     catch(error){
-//       console.log(error)
-
-//     }
-
-// }
 
 // ../Api/index.js
 export const registerStoreUser = async ({ name, username, email, password }) => {
@@ -120,24 +100,6 @@ export const registerStoreUser = async ({ name, username, email, password }) => 
 };
 
 
-// export const loginStoreUser = async ({ username, password }) => {
-//   const token = btoa(`${username}:${password}`);
-
-//   const res = await fetch("https://infinitymegamall.1wp.site/wp-json/wp/v2/users/me", {
-//     method: "GET",
-//     headers: {
-//       Authorization: `Basic ${token}`,
-//     },
-//   });
-
-//   if (!res.ok) {
-//     const errData = await res.json();
-//     throw new Error(errData.message || "Login failed");
-//   }
-
-//   const user = await res.json();
-//   return user;
-// };
 
 
 export const loginStoreUser = async ({ username, password }) => {
@@ -159,58 +121,6 @@ export const loginStoreUser = async ({ username, password }) => {
 };
 
 
-// create an order in woocommerce store
-// export const createOrder = async (userInfo) => {
-
-//   try {
-//     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-//     if (cartItems.length === 0) {
-//       throw new Error("Cart is empty");
-//     }
-//     const lineItems = cartItems.map(item => ({
-//       product_id: item.id,
-//       quantity: item.quantity
-//     }));
-
-//     const orderData = {
-//       ...userInfo,
-//       payment_method: "cod", // Change to your desired payment method
-//       payment_method_title: "Cash on Delivery",
-//       set_paid: false, // Set to true if you want to mark the order as paid
-//       billing: {
-//         first_name: userInfo.name,
-//         last_name: "",
-//         address_1: userInfo.address,
-//         city: userInfo.city,
-//         state: userInfo.state,
-//         postcode: userInfo.postcode,
-//         country: userInfo.country,
-//         email: userInfo.email,
-//         phone: userInfo.phone
-//       },
-//       line_items: lineItems
-//     };
-
-//     const url = `${API_URL}/orders`;
-//     const oauthParams = generateOAuthSignature(url, 'POST', orderData);
-
-//     const oauthHeader = Object.keys(oauthParams)
-//       .map(key => `${encodeURIComponent(key)}="${encodeURIComponent(oauthParams[key])}"`)
-//       .join(', ');
-
-//     return await api.post("/orders", orderData, {
-//       headers: {
-//         "Authorization": `OAuth ${oauthHeader}`
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error)
-//   }
-
-
-
-// }
-
 
 export const createOrder = async (userInfo) => {
   try {
@@ -230,24 +140,7 @@ export const createOrder = async (userInfo) => {
       line_items: lineItems
     }
 
-    // const orderData = {
-    //   ...userInfo,
-    //   payment_method: "cod",
-    //   payment_method_title: "Cash on Delivery",
-    //   set_paid: false,
-    //   billing: {
-    //     first_name: userInfo.name,
-    //     last_name: "",
-    //     address_1: userInfo.address,
-    //     city: userInfo.city,
-    //     state: userInfo.state,
-    //     postcode: userInfo.postcode,
-    //     country: userInfo.country,
-    //     email: userInfo.email,
-    //     phone: userInfo.phone
-    //   },
-    //   line_items: lineItems
-    // };
+
 
     const url = `${API_URL}/orders`;
     const oauthParams = generateOAuthSignature(url, 'POST');
