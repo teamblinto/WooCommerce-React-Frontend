@@ -122,10 +122,25 @@ export const loginStoreUser = async ({ username, password }) => {
   );
 
   const data = await res.json();
+  console.log("logged in user data", data);
 
   if (!res.ok) {
     throw new Error(data.message || "Login failed");
   }
+
+  const userDetailsRes = await fetch(
+    "https://infinitymegamall.1wp.site/wp-json/wp/v2/users/me", // Fetch details of logged-in user
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${data.token}`, // Pass the JWT token here
+      },
+    }
+  );
+
+  const userDetails = await userDetailsRes.json();
+  console.log("User id", userDetails.id);
+  localStorage.setItem("userId", userDetails.id);
 
   return data; // includes token, user_id, etc.
 };
@@ -189,12 +204,12 @@ export const getAllCoupons = async () => {
 
 export const getAllOrders = async () => {
   try {
-    const url = `${API_URL}/orders`; // endpoint to fetch coupons
-    const oauthParams = generateOAuthSignature(url); // use your existing signature generator
-    console.log(oauthParams);
+    const url = `${API_URL}/orders`;
+    const oauthParams = generateOAuthSignature(url);
+    //console.log(oauthParams);
 
     const response = await api.get("/orders", {
-      params: oauthParams,
+      params: oauthParams, // pass the OAuth parameters
     });
 
     return response.data;

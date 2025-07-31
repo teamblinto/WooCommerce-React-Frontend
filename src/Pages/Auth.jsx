@@ -69,9 +69,10 @@ const Auth = () => {
       const user = await loginStoreUser(loginData);
 
       // Log the JWT token to console
-      console.log("JWT Token:", user);
+      console.log("JWT Token:", user.token);
 
       // Optionally store in localStorage
+
       localStorage.setItem("token", user.token);
 
       toast.success(

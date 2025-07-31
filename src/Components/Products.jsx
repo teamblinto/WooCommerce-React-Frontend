@@ -6,13 +6,13 @@ import { ProductSkeletonCard } from "./SkeletonCard";
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
 
-  console.log(products);
+  // console.log(products);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const data = await getAllProducts();
       setProducts(data);
-      console.log(data);
+      // console.log(data);
     };
     fetchProducts();
   }, []);
