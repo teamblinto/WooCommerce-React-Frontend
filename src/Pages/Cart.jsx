@@ -111,7 +111,7 @@ const Cart = ({ onCloseCartPopup }) => {
                   onClick={() => handleRemoveItem(item.id)}
                   className="text-sm font-semibold cursor-pointer hover:text-red-600"
                 >
-                  Remove
+                  <i className="fas fa-trash"></i>
                 </button>
               </div>
             </div>

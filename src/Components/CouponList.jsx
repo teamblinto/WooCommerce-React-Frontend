@@ -70,7 +70,9 @@ const CouponList = () => {
 
   return (
     <div className="mt-6">
-      <h2 className="text-xl font-extrabold mb-4 text-gray-800">Available Coupons</h2>
+      <h2 className="text-xl font-extrabold mb-4 text-gray-800">
+        Available Coupons
+      </h2>
       {coupons.length === 0 ? (
         <p className="text-gray-500">No coupons available.</p>
       ) : (
@@ -85,7 +87,9 @@ const CouponList = () => {
                   <p className="text-sm uppercase tracking-widest font-semibold mb-2 opacity-90">
                     Discount Coupon
                   </p>
-                  <h3 className="text-2xl font-bold mb-2 select-all">{coupon.code}</h3>
+                  <h3 className="text-2xl font-bold mb-2 select-all">
+                    {coupon.code}
+                  </h3>
                   <p className="text-sm mb-3 opacity-90 min-h-[3rem]">
                     {coupon.description || "No description"}
                   </p>
@@ -101,7 +105,7 @@ const CouponList = () => {
 
                   <button
                     onClick={() => handleCopy(coupon.code)}
-                    className="bg-white bg-opacity-20 hover:bg-opacity-40 text-black px-3 py-1 rounded-md text-sm font-medium transition"
+                    className="bg-white bg-opacity-20 hover:bg-opacity-40 cursor-pointer text-black px-3 py-1 rounded-md text-sm font-medium transition"
                     aria-label={`Copy coupon code ${coupon.code}`}
                   >
                     {copiedCode === coupon.code ? "Copied!" : "Copy"}

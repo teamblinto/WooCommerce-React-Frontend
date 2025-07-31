@@ -5,7 +5,6 @@ import { ProductSkeletonCard } from "./SkeletonCard";
 
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   console.log(products);
 
@@ -13,7 +12,6 @@ const ProductsSection = () => {
     const fetchProducts = async () => {
       const data = await getAllProducts();
       setProducts(data);
-      setLoading(false);
       console.log(data);
     };
     fetchProducts();
@@ -28,9 +26,8 @@ const ProductsSection = () => {
         </p>
       </div>
 
-      {loading ? (
+      {products.length === 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-          {" "}
           <ProductSkeletonCard />
           <ProductSkeletonCard />
           <ProductSkeletonCard />

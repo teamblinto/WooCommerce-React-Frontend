@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import { createOrder } from "../Api";
 import { toast } from "react-toastify";
@@ -34,7 +32,7 @@ function Checkout() {
   });
 
   const handleChange = (e) => {
-    const { id, value,  checked } = e.target;
+    const { id, value, checked } = e.target;
 
     if (id === "shipToDifferent") {
       setFormData((prev) => ({ ...prev, shipToDifferent: checked }));
@@ -67,7 +65,9 @@ function Checkout() {
         payment_method_title: "Direct Bank Transfer",
         set_paid: true,
         billing: formData.billing,
-        shipping: formData.shipToDifferent ? formData.shipping : formData.billing,
+        shipping: formData.shipToDifferent
+          ? formData.shipping
+          : formData.billing,
         shipping_lines: [
           {
             method_id: "flat_rate",
@@ -77,14 +77,12 @@ function Checkout() {
         ],
       };
 
-       await createOrder(orderData);
+      await createOrder(orderData);
       toast.success("Order placed successfully!", {
         position: "top-left",
       });
       localStorage.removeItem("cart"); // Clear cart after order
       navigate("/"); // Redirect to orders page
-      
-
     } catch (error) {
       console.error("Order failed:", error);
       toast.error("Failed to place order. Please try again.");
@@ -100,14 +98,33 @@ function Checkout() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Billing Fields */}
-          {["first_name", "last_name", "address_1", "address_2", "city", "state", "postcode", "email", "phone"].map((field) => (
+          {[
+            "first_name",
+            "last_name",
+            "address_1",
+            "address_2",
+            "city",
+            "state",
+            "postcode",
+            "email",
+            "phone",
+          ].map((field) => (
             <div key={field}>
-              <label htmlFor={field} className="block text-sm font-medium text-gray-700 capitalize">
+              <label
+                htmlFor={field}
+                className="block text-sm font-medium text-gray-700 capitalize"
+              >
                 {field.replace("_", " ")} *
               </label>
               <input
                 id={field}
-                type={field === "email" ? "email" : field === "phone" ? "tel" : "text"}
+                type={
+                  field === "email"
+                    ? "email"
+                    : field === "phone"
+                    ? "tel"
+                    : "text"
+                }
                 className="mt-1 p-3 w-full border rounded-md focus:ring-2 focus:ring-indigo-500"
                 value={formData.billing[field]}
                 onChange={handleChange}
@@ -118,7 +135,12 @@ function Checkout() {
 
           {/* Country */}
           <div>
-            <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country *</label>
+            <label
+              htmlFor="country"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Country *
+            </label>
             <select
               id="country"
               className="mt-1 p-3 w-full border rounded-md focus:ring-2 focus:ring-indigo-500"
@@ -149,9 +171,20 @@ function Checkout() {
           {formData.shipToDifferent && (
             <>
               <h2 className="text-lg font-semibold">Shipping Address</h2>
-              {["first_name", "last_name", "address_1", "address_2", "city", "state", "postcode"].map((field) => (
+              {[
+                "first_name",
+                "last_name",
+                "address_1",
+                "address_2",
+                "city",
+                "state",
+                "postcode",
+              ].map((field) => (
                 <div key={`shipping_${field}`}>
-                  <label htmlFor={`shipping_${field}`} className="block text-sm font-medium text-gray-700 capitalize">
+                  <label
+                    htmlFor={`shipping_${field}`}
+                    className="block text-sm font-medium text-gray-700 capitalize"
+                  >
                     {field.replace("_", " ")} *
                   </label>
                   <input
@@ -169,7 +202,7 @@ function Checkout() {
 
           <button
             type="submit"
-            className="w-full mt-6 py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+            className="w-full mt-6 py-3 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 cursor-pointer transition-colors ease-in"
           >
             Submit
           </button>

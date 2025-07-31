@@ -315,14 +315,14 @@ const CartPage = () => {
             </div>
             <div className="flex items-center space-x-2 ml-auto">
               <button
-                className="text-lg text-gray-600 hover:text-gray-800 px-2"
+                className="text-lg text-gray-600 hover:text-gray-800 px-2 cursor-pointer"
                 onClick={() => handleQuantityChange(item.id, "decrement")}
               >
                 -
               </button>
               <span className="text-lg font-medium">{item.quantity}</span>
               <button
-                className="text-lg text-gray-600 hover:text-gray-800 px-2"
+                className="text-lg text-gray-600 hover:text-gray-800 px-2 cursor-pointer"
                 onClick={() => handleQuantityChange(item.id, "increment")}
               >
                 +
@@ -331,7 +331,7 @@ const CartPage = () => {
                 onClick={() => handleRemoveItem(item.id)}
                 className="text-sm font-semibold cursor-pointer hover:text-red-600"
               >
-                <img className="w-4" src="./src/assets/img/delete.jpg" alt="" />
+                <i className="fas fa-trash"></i>
               </button>
             </div>
           </div>
