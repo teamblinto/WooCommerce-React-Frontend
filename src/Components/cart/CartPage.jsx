@@ -48,7 +48,6 @@
 //     0
 //   );
 
-
 //   // const handleProceedCheckout = () => {
 //   //   navigate("/checkout");
 //   // };
@@ -107,7 +106,7 @@
 //       </div>
 
 //       <div className="flex space-x-4">
-// {/*  
+// {/*
 //         <button
 //           className="w-full bg-red-600 w-xs text-white p-2 rounded-md"
 //           onClick={() => {
@@ -129,7 +128,7 @@
 //               toast.warn("Please Sign-Up to proceed to checkout", {
 //   position: "top-left",
 // });
-              
+
 //               navigate("/login");
 //               return;
 //             }
@@ -150,7 +149,6 @@
 
 // export default CartPage;
 
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -166,30 +164,29 @@ const CartPage = () => {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   useEffect(() => {
-  const savedCart = localStorage.getItem("cart");
-  if (savedCart) {
-    setCartItems(JSON.parse(savedCart));
-  }
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
 
-  const fetchCoupons = async () => {
-    const data = await getAllCoupons();
-    setCoupons(data || []);
-  };
-  fetchCoupons();
+    const fetchCoupons = async () => {
+      const data = await getAllCoupons();
+      setCoupons(data || []);
+    };
+    fetchCoupons();
 
-  // Load saved coupon
-  const savedCoupon = localStorage.getItem("coupon");
-  if (savedCoupon) {
-    const parsed = JSON.parse(savedCoupon);
-    setCouponCode(parsed.code);
-    setDiscount(parsed.discount);
-    setAppliedCoupon(parsed.couponData);
-  }
-}, []);
-
+    // Load saved coupon
+    const savedCoupon = localStorage.getItem("coupon");
+    if (savedCoupon) {
+      const parsed = JSON.parse(savedCoupon);
+      setCouponCode(parsed.code);
+      setDiscount(parsed.discount);
+      setAppliedCoupon(parsed.couponData);
+    }
+  }, []);
 
   // useEffect(() => {
-    
+
   //   const savedCart = localStorage.getItem("cart");
   //   if (savedCart) {
   //     setCartItems(JSON.parse(savedCart));
@@ -261,35 +258,37 @@ const CartPage = () => {
   // };
 
   const applyCoupon = () => {
-  const match = coupons.find(
-    (c) => c.code.toLowerCase() === couponCode.trim().toLowerCase()
-  );
+    const match = coupons.find(
+      (c) => c.code.toLowerCase() === couponCode.trim().toLowerCase()
+    );
 
-  if (!match) {
-    toast.error("Invalid coupon code");
-    return;
-  }
+    if (!match) {
+      toast.error("Invalid coupon code");
+      return;
+    }
 
-  let discountAmount = 0;
-  if (match.discount_type === "percent") {
-    discountAmount = (totalPrice * parseFloat(match.amount)) / 100;
-  } else if (match.discount_type === "fixed_cart") {
-    discountAmount = parseFloat(match.amount);
-  }
+    let discountAmount = 0;
+    if (match.discount_type === "percent") {
+      discountAmount = (totalPrice * parseFloat(match.amount)) / 100;
+    } else if (match.discount_type === "fixed_cart") {
+      discountAmount = parseFloat(match.amount);
+    }
 
-  setDiscount(discountAmount);
-  setAppliedCoupon(match);
+    setDiscount(discountAmount);
+    setAppliedCoupon(match);
 
-  // 🔒 Store to localStorage
-  localStorage.setItem("coupon", JSON.stringify({
-    code: match.code,
-    discount: discountAmount,
-    couponData: match,
-  }));
+    // 🔒 Store to localStorage
+    localStorage.setItem(
+      "coupon",
+      JSON.stringify({
+        code: match.code,
+        discount: discountAmount,
+        couponData: match,
+      })
+    );
 
-  toast.success(`Coupon "${match.code}" applied!`);
-};
-
+    toast.success(`Coupon "${match.code}" applied!`);
+  };
 
   return (
     <div className="container mx-auto max-w-5xl pt-30 p-4">
@@ -339,42 +338,40 @@ const CartPage = () => {
         ))
       )}
 
-
       <div className="my-4">
-  {appliedCoupon ? (
-    <div className="flex items-center justify-between bg-green-100 text-green-700 px-4 py-2 rounded-md">
-      <span>Coupon applied</span>
-      <button
-        onClick={() => {
-          setAppliedCoupon(null);
-          setCouponCode("");
-          setDiscount(0);
-          localStorage.removeItem("coupon");
-        }}
-        className="text-red-500 ml-4 font-semibold hover:underline"
-      >
-        ✕
-      </button>
-    </div>
-  ) : (
-    <>
-      <input
-        type="text"
-        placeholder="Enter coupon code"
-        value={couponCode}
-        onChange={(e) => setCouponCode(e.target.value)}
-        className="border px-3 py-2 mr-2"
-      />
-      <button
-        onClick={applyCoupon}
-        className="bg-green-600 text-white px-4 py-2 rounded"
-      >
-        Apply Coupon
-      </button>
-    </>
-  )}
-</div>
-
+        {appliedCoupon ? (
+          <div className="flex items-center justify-between bg-green-100 text-green-700 px-4 py-2 rounded-md">
+            <span>Coupon applied</span>
+            <button
+              onClick={() => {
+                setAppliedCoupon(null);
+                setCouponCode("");
+                setDiscount(0);
+                localStorage.removeItem("coupon");
+              }}
+              className="text-red-500 ml-4 font-semibold hover:underline"
+            >
+              ✕
+            </button>
+          </div>
+        ) : (
+          <>
+            <input
+              type="text"
+              placeholder="Enter coupon code"
+              value={couponCode}
+              onChange={(e) => setCouponCode(e.target.value)}
+              className="border px-3 py-2 mr-2"
+            />
+            <button
+              onClick={applyCoupon}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors ease-in cursor-pointer"
+            >
+              Apply Coupon
+            </button>
+          </>
+        )}
+      </div>
 
       {/* Total Display */}
       <div className="flex justify-between items-center mb-4">
@@ -384,7 +381,7 @@ const CartPage = () => {
             <span className="line-through text-gray-500 mr-2">
               {totalPrice.toFixed(2)}৳
             </span>
-            <span className="text-green-600 font-bold">
+            <span className="text-green-600 font-bold ">
               {(totalPrice - discount).toFixed(2)}৳
             </span>
           </div>
@@ -396,7 +393,7 @@ const CartPage = () => {
       {/* Checkout */}
       <div className="flex space-x-4">
         <button
-          className="w-full bg-red-600 text-white p-2 rounded-md"
+          className="w-full bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition-colors ease-in cursor-pointer"
           onClick={() => {
             const token = localStorage.getItem("token");
 
@@ -421,11 +418,10 @@ const CartPage = () => {
       </div>
 
       <div className="mt-16">
-          <CouponList />
+        <CouponList />
       </div>
     </div>
   );
 };
 
 export default CartPage;
-

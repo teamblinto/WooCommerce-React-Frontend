@@ -62,7 +62,7 @@ const Cart = ({ onCloseCartPopup }) => {
     <div className="fixed right-0 top-0 bottom-0 w-88 h-screen bg-white shadow-lg p-4  overflow-auto z-20">
       <div className="flex justify-between items-center mb-4">
         <button
-          className="text-xl text-gray-700 hover:text-gray-900"
+          className="text-xl text-gray-700 hover:text-gray-900 cursor-pointer"
           onClick={() => onCloseCartPopup(false)}
         >
           <i className="fas fa-times"></i>
@@ -93,14 +93,14 @@ const Cart = ({ onCloseCartPopup }) => {
             <div className="flex flex-col justify-center items-end gap-2">
               <div className="flex items-center space-x-2 ml-auto">
                 <button
-                  className="text-lg text-gray-600 hover:text-gray-800 px-2"
+                  className="text-lg text-gray-600 hover:text-gray-800 px-2 cursor-pointer"
                   onClick={() => handleQuantityChange(item.id, "decrement")}
                 >
                   -
                 </button>
                 <span className="text-lg font-medium">{item.quantity}</span>
                 <button
-                  className="text-lg text-gray-600 hover:text-gray-800 px-2"
+                  className="text-lg text-gray-600 hover:text-gray-800 px-2 cursor-pointer"
                   onClick={() => handleQuantityChange(item.id, "increment")}
                 >
                   +
@@ -126,14 +126,14 @@ const Cart = ({ onCloseCartPopup }) => {
 
       <div className="flex space-x-4">
         <button
-          className="w-full bg-gray-200 text-gray-700 p-2 rounded-md"
+          className="w-full bg-gray-200 text-gray-700 p-2 rounded-md cursor-pointer hover:bg-gray-300  transition-colors ease-in"
           onClick={() => navigate("/viewcart")}
         >
           View Cart
         </button>
 
         <button
-          className="w-full bg-red-600 text-white p-2 rounded-md"
+          className="w-full bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition-colors ease-in cursor-pointer"
           onClick={() => {
             const token = localStorage.getItem("token");
 
