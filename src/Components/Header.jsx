@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import logo from "../assets/img/Infinity-social-Logo.webp";
 import Cart from "../Pages/Cart";
 import { href, Link } from "react-router-dom";
@@ -8,10 +8,10 @@ import { FaCartShopping } from "react-icons/fa6";
 import CouponList from "./CouponList";
 import { FaCaretSquareRight } from "react-icons/fa";
 import { CiUser } from "react-icons/ci";
+import { CartContext } from "../context/CartContext";
 
-function Header() {
-  const [cartPopUp, setCartPopUp] = useState(false);
-
+function Header({ setCartPopUp, cartPopUp }) {
+  const { cart } = useContext(CartContext);
   const AuthMenu = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -73,9 +73,14 @@ function Header() {
               )}
               <li
                 onClick={() => setCartPopUp(!cartPopUp)}
-                className="cursor-pointer"
+                className="cursor-pointer relative"
               >
                 <FaCartShopping />
+                {cart.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    {cart.length}
+                  </span>
+                )}
               </li>
               {/* <li className="cursor-pointer">
               <Link to="/login">Signup</Link>

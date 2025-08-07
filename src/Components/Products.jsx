@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { getAllProducts } from "../Api";
-import { Link } from "react-router-dom";
-import { ProductSkeletonCard } from "./SkeletonCard";
+import { Link, useOutletContext } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import { CartContext } from "../context/CartContext";
 
 const ProductsSection = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { addToCart } = useContext(CartContext);
+  const { setCartPopUp } = useOutletContext();
 
-  // console.log(products);
+  const handleAddToCart = (product) => {
+    addToCart({ ...product, quantity: 1 });
+    setCartPopUp(true);
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       const data = await getAllProducts();
       setProducts(data);
-      // console.log(data);
+      setLoading(false);
     };
     fetchProducts();
   }, []);
@@ -26,17 +34,15 @@ const ProductsSection = () => {
         </p>
       </div>
 
-      {products.length === 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-          <ProductSkeletonCard />
-          <ProductSkeletonCard />
-          <ProductSkeletonCard />
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <ClipLoader color={"#000"} loading={loading} size={150} />
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
           {products.map((product) => (
-            <Link to={`/product/${product.id}`} key={product.id}>
-              <div className="bg-white pb-2 rounded-xl group relative cursor-pointer hover:shadow-lg transition">
+            <div key={product.id} className="bg-white pb-2 rounded-xl group relative cursor-pointer hover:shadow-lg transition">
+              <Link to={`/product/${product.id}`}>
                 {/* SALE Badge */}
                 {product.on_sale && (
                   <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 z-10">
@@ -75,8 +81,16 @@ const ProductsSection = () => {
                     )}
                   </div>
                 </div>
+              </Link>
+              <div className="px-2">
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className="w-2/5 bg-black text-white mt-4 py-2 rounded hover:bg-black/80 transition"
+                >
+                  Add to Cart
+                </button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       )}

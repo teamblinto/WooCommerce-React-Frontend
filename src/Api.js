@@ -51,10 +51,10 @@ api.get("/products");
 export const getAllProducts = async () => {
   try {
     const url = `${API_URL}/products`;
-    const oauthParams = generateOAuthSignature(url);
-    console.log(oauthParams);
+    const requestParams = { status: "publish" };
+    const oauthParams = generateOAuthSignature(url, "GET", requestParams);
     const response = await api.get("/products", {
-      params: oauthParams,
+      params: { ...requestParams, ...oauthParams },
     });
     return response.data;
   } catch (error) {
@@ -66,9 +66,10 @@ export const getAllProducts = async () => {
 export const getSingleProductData = async (productID) => {
   try {
     const url = `${API_URL}/products/${productID}`;
-    const oauthParams = generateOAuthSignature(url);
+    const requestParams = { status: "publish" };
+    const oauthParams = generateOAuthSignature(url, "GET", requestParams);
     const response = await api.get(`/products/${productID}`, {
-      params: oauthParams,
+      params: { ...requestParams, ...oauthParams },
     });
     return response.data;
   } catch (error) {

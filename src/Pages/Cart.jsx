@@ -1,55 +1,28 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CartContext } from "../context/CartContext";
 
 const Cart = ({ onCloseCartPopup }) => {
   const navigate = useNavigate();
-
-  // Load cart from localStorage or empty array
-  const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    // Ensure quantity is present and numeric for each item
-    if (savedCart) {
-      return JSON.parse(savedCart).map((item) => ({
-        ...item,
-        quantity: item.quantity ? Number(item.quantity) : 1,
-        price: Number(item.price) || 0,
-      }));
-    }
-    return [];
-  });
-
-  // remove item from cart
-  function handleRemoveItem(itemId) {
-    setCartItems((prevItems) => {
-      const updatedItems = prevItems.filter((item) => item.id !== itemId);
-
-      // Update localStorage with the updated cart
-      localStorage.setItem("cart", JSON.stringify(updatedItems));
-      return updatedItems;
-    });
-  }
+  const { cart, removeFromCart, updateCart } = useContext(CartContext);
 
   // Handle quantity changes for individual items
   const handleQuantityChange = (id, action) => {
-    setCartItems((prevItems) => {
-      const updatedItems = prevItems.map((item) => {
-        if (item.id === id) {
-          let newQty = item.quantity;
-          if (action === "increment") newQty += 1;
-          else if (action === "decrement" && newQty > 1) newQty -= 1;
-          return { ...item, quantity: newQty };
-        }
-        return item;
-      });
-      // Update localStorage
-      localStorage.setItem("cart", JSON.stringify(updatedItems));
-      return updatedItems;
+    const updatedCart = cart.map((item) => {
+      if (item.id === id) {
+        let newQty = item.quantity;
+        if (action === "increment") newQty += 1;
+        else if (action === "decrement" && newQty > 1) newQty -= 1;
+        return { ...item, quantity: newQty };
+      }
+      return item;
     });
+    updateCart(updatedCart);
   };
 
   // Calculate total price of all cart items
-  const totalPrice = cartItems.reduce(
+  const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
@@ -71,23 +44,23 @@ const Cart = ({ onCloseCartPopup }) => {
       </div>
 
       {/* List all cart items */}
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        cartItems.map((item) => (
+        cart.map((item) => (
           <div
             key={item.id}
             className="flex items-center mb-4 border-b pb-2 last:border-b-0"
           >
             <img
-              src={item.images[0].src || "https://via.placeholder.com/50"}
+              src={item.images?.[0]?.src || "https://via.placeholder.com/50"}
               alt={item.name}
               className="w-16 h-16 object-cover rounded-md"
             />
             <div className="ml-4 flex flex-col flex-grow">
               <span className="font-medium">{item.name}</span>
               <span className="text-sm text-gray-500">
-                {item.price.toFixed(2)}৳ x {item.quantity}
+                {item.price}৳ x {item.quantity}
               </span>
             </div>
             <div className="flex flex-col justify-center items-end gap-2">
@@ -108,7 +81,7 @@ const Cart = ({ onCloseCartPopup }) => {
               </div>
               <div>
                 <button
-                  onClick={() => handleRemoveItem(item.id)}
+                  onClick={() => removeFromCart(item.id)}
                   className="text-sm font-semibold cursor-pointer hover:text-red-600"
                 >
                   <i className="fas fa-trash"></i>
@@ -145,7 +118,7 @@ const Cart = ({ onCloseCartPopup }) => {
               return;
             }
 
-            if (cartItems.length > 0) {
+            if (cart.length > 0) {
               navigate("/checkout");
             } else {
               toast.warning("Your cart is empty! Please add items to proceed.");

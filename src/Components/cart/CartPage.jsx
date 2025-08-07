@@ -149,26 +149,22 @@
 
 // export default CartPage;
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllCoupons } from "../../Api"; // Adjust path
 import CouponList from "../CouponList";
+import { CartContext } from "../../context/CartContext";
 
 const CartPage = () => {
+  const { cart, updateCart, removeFromCart } = useContext(CartContext);
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);
   const [coupons, setCoupons] = useState([]);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart");
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
-    }
-
     const fetchCoupons = async () => {
       const data = await getAllCoupons();
       setCoupons(data || []);
@@ -183,7 +179,7 @@ const CartPage = () => {
       setDiscount(parsed.discount);
       setAppliedCoupon(parsed.couponData);
     }
-  }, []);
+  }, [cart]);
 
   // useEffect(() => {
 
@@ -203,33 +199,25 @@ const CartPage = () => {
 
   // Handle quantity changes
   const handleQuantityChange = (id, action) => {
-    setCartItems((prevItems) => {
-      const updatedItems = prevItems.map((item) => {
-        if (item.id === id) {
-          let newQty = item.quantity;
-          if (action === "increment") newQty += 1;
-          else if (action === "decrement" && newQty > 1) newQty -= 1;
-          return { ...item, quantity: newQty };
-        }
-        return item;
-      });
-
-      localStorage.setItem("cart", JSON.stringify(updatedItems));
-      return updatedItems;
+    const updatedItems = cart.map((item) => {
+      if (item.id === id) {
+        let newQty = item.quantity;
+        if (action === "increment") newQty += 1;
+        else if (action === "decrement" && newQty > 1) newQty -= 1;
+        return { ...item, quantity: newQty };
+      }
+      return item;
     });
+    updateCart(updatedItems);
   };
 
   // Remove item
   const handleRemoveItem = (itemId) => {
-    setCartItems((prevItems) => {
-      const updatedItems = prevItems.filter((item) => item.id !== itemId);
-      localStorage.setItem("cart", JSON.stringify(updatedItems));
-      return updatedItems;
-    });
+    removeFromCart(itemId);
   };
 
   // Total price
-  const totalPrice = cartItems.reduce(
+  const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
@@ -294,10 +282,10 @@ const CartPage = () => {
     <div className="container mx-auto max-w-5xl pt-30 p-4">
       <h1 className="text-2xl font-semibold mb-4">Your Cart</h1>
 
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        cartItems.map((item) => (
+        cart.map((item) => (
           <div
             key={item.id}
             className="flex items-center mb-4 border-b pb-2 last:border-b-0"
@@ -328,7 +316,7 @@ const CartPage = () => {
                 +
               </button>
               <button
-                onClick={() => handleRemoveItem(item.id)}
+                onClick={() => removeFromCart(item.id)}
                 className="text-sm font-semibold cursor-pointer hover:text-red-600"
               >
                 <i className="fas fa-trash"></i>
@@ -406,7 +394,7 @@ const CartPage = () => {
               return;
             }
 
-            if (cartItems.length > 0) {
+            if (cart.length > 0) {
               navigate("/checkout");
             } else {
               toast.warn("Your cart is empty! Please add items to proceed.");

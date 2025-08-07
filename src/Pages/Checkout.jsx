@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createOrder } from "../Api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +30,16 @@ function Checkout() {
       country: "BD",
     },
   });
+
+  useEffect(() => {
+    const savedBillingInfo = localStorage.getItem("billingInfo");
+    if (savedBillingInfo) {
+      setFormData((prev) => ({
+        ...prev,
+        billing: JSON.parse(savedBillingInfo),
+      }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { id, value, checked } = e.target;
@@ -77,12 +87,13 @@ function Checkout() {
         ],
       };
 
-      await createOrder(orderData);
+      const createdOrder = await createOrder(orderData);
       toast.success("Order placed successfully!", {
         position: "top-left",
       });
+      localStorage.setItem("billingInfo", JSON.stringify(formData.billing));
       localStorage.removeItem("cart"); // Clear cart after order
-      navigate("/"); // Redirect to orders page
+      navigate("/order-confirmation", { state: { order: createdOrder } }); // Redirect to orders page
     } catch (error) {
       console.error("Order failed:", error);
       toast.error("Failed to place order. Please try again.");
